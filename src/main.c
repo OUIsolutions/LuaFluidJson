@@ -1,8 +1,15 @@
 
 
 
-
+#include "constants.h"
 #include  "dependencies/LuaCEmbed.h"
+
+#ifndef cJSON__h
+#include "dependencies/cJSON/cJSON.h"
+#include "dependencies/cJSON/cJSON.c"
+#endif
+
+
 LuaCEmbedNamespace lua;
 #include "io/io.h"
 #include "loads/loads.h"

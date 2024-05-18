@@ -1,0 +1,1 @@
+#define PRIVATE_FILE_NOT_FOUND_ERROR "file %s not found"
