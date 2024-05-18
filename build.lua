@@ -1,3 +1,3 @@
 
-os.execute("gcc -Wall -shared -fpic -o luaFluidJson/luaFluidJson.so  src/start.c")
+os.execute("gcc -Wall -shared -fpic -o luaFluidJson/luaFluidJson.so  src/main.c")
 
