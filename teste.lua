@@ -1,17 +1,16 @@
-
-json = require("luaFluidJson/luaFluidJson")
+local json = require("luaFluidJson/luaFluidJson")
 
 local user  ={
 
     name='Nateus',
-    sss=true,
-
-    age=27.4,
+    age=27,
+    maried=true,
     sons={
-        {name='son1',maried=true }
+        {name='son1',maried=false }
     }
 }
 local ident = true
 local value = json.dumps_to_string(user,ident);
+
 print(value)
 

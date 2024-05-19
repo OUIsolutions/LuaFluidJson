@@ -55,7 +55,7 @@ local function test_unit(unit,start_assignature)
 
     print("testing: "..file_path)
 
-    local output = io.popen("lua "..file_path,"r"):read()
+    local output,code = io.popen("lua "..file_path,"r"):read("a")
     if output then
        dtw.write_file(unit.."expected.txt",output)
      end
@@ -96,7 +96,7 @@ local function main()
 
     print("compiling")
 
-    local code = os.execute("gcc -Wall  -shared -fpic -fsanitize=address -o luaFluidJson/luaFluidJson_lib.so  src/main.c")
+    local code = os.execute("gcc -Wall  -shared -fpic -o luaFluidJson/luaFluidJson_lib.so  src/main.c")
     if code == 1 then
         return
     end
