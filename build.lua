@@ -2,11 +2,11 @@
 
 
 
-local dtw = require("luaDoTheWorld/luaDoTheWorld")
+local dtw = require("build/luaDoTheWorld/luaDoTheWorld")
 
 
 local RECONSTRUCT = false
-local SIDE_EFFECT = "tests/target"
+local SIDE_EFFECT = "test/target"
 local side_effect_copy_path  = SIDE_EFFECT.."copy"
 
 
