@@ -4,8 +4,8 @@
 ---@class LuaFluidJson
 ---@field load_from_string fun(str:string): any 
 ---@field load_from_file fun(str:string):any
----@field dumps_to_string fun(entry:table): string 
----@field dumps_to_file fun(entry:table)
+---@field dumps_to_string fun(entry:table,ident:boolean): string 
+---@field dumps_to_file fun(entry:table,output:string,ident:boolean)
 
 
 local info = debug.getinfo(1, "S")

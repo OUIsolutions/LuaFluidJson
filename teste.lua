@@ -1,16 +1,11 @@
 
 json = require("luaFluidJson/luaFluidJson")
 
-teste = json.load_from_file("teste.json")
+local teste = {
+    a =30,
+    b= 40,
+    nome='mateus',
+    array = {1,2,3}
+}
 
-for i ,v in pairs(teste) do
-   if type(v) == 'table' then
-        for x,y in pairs(v) do
-            print(x,y)
-        end
-   else
-       print(i,v)
-
-   end
-
-end
+json.dumps_to_file(teste,"saida.json",true)
