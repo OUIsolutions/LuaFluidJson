@@ -1,0 +1,8 @@
+{
+  "name": "mateus",
+  "age": 27,
+  "maried": true,
+  "sons": [
+    {"name": "test","attr": null}
+  ]
+}

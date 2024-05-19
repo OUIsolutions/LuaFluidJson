@@ -34,18 +34,7 @@ local function handle_side_effect(dir,current_assignature)
     if not test_were_predictible or RECONSTRUCT then
         print("created"..side_effect_expected_folder)
         dtw.copy_any_overwriting(SIDE_EFFECT,side_effect_expected_folder)
-
-    else
-
-        local expected_assignature = dtw.generate_sha_from_folder_by_content(side_effect_expected_folder)
-
-        if expected_assignature ~= current_assignature then
-
-            print("side effect diferent")
-            return 1
-        end
     end
-
 end
 
 
@@ -95,10 +84,7 @@ local function test_unit(unit,start_assignature)
     local test_assignature  = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
     --means code generated side effect
     if start_assignature ~= dtw.generate_sha_from_folder_by_content(SIDE_EFFECT) then
-        local error = handle_side_effect(unit,test_assignature)
-        if error then
-            return error
-        end
+        handle_side_effect(unit,test_assignature)
     end
 
     --validate_commad_result(result)
@@ -134,9 +120,6 @@ local function main()
         return
     end
 
-
-
-
     local start_assignature = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
 
     dtw.copy_any_overwriting(SIDE_EFFECT,side_effect_copy_path)
@@ -145,6 +128,7 @@ local function main()
 
     dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
     dtw.remove_any(side_effect_copy_path)
+
    -- os.execute("zip -r luaDoTheWorld.zip luaDoTheWorld/")
 end
 

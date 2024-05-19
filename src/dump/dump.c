@@ -24,9 +24,7 @@ cJSON  * lua_fluid_json_dump_to_cJSON_array(LuaCEmbedTable *table){
                 cJSON_AddItemToArray(created_array, cJSON_CreateString(value));
 
             }
-
         }
-
         if(type == lua.types.BOOL){
             bool value = lua.tables.get_bool_by_index(table,i);
             cJSON_AddItemToArray(created_array, cJSON_CreateBool(value));
@@ -89,7 +87,6 @@ cJSON  * lua_fluid_json_dump_table_to_cJSON(LuaCEmbedTable *table){
 LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
 
 
-
     cJSON *result = NULL;
     int element_type = lua.args.get_type(args,0);
     if(element_type == lua.types.STRING){
@@ -110,7 +107,6 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
     else if(element_type == lua.types.TABLE){
         LuaCEmbedTable  *value = lua.args.get_table(args,0);
         result = lua_fluid_json_dump_table_to_cJSON(value);
-
     }
     else{
         return lua.response.send_error(
@@ -124,6 +120,10 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
     if(lua.args.get_type(args,1) != lua.types.NOT_FOUND){
         ident = lua.args.get_bool(args,1);
     }
+    if(lua.has_errors(args)){
+        char *error_msg = lua.get_error_message(args);
+        return lua.response.send_error(error_msg);
+    }
 
     char *result_str  = NULL;
     if(ident){
@@ -132,8 +132,10 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
     else{
         result_str = cJSON_PrintUnformatted(result);
     }
-    cJSON_Delete(result);
+
     LuaCEmbedResponse *response = lua.response.send_str(result_str);
+    cJSON_Delete(result);
+
     free(result_str);
     return response;
 }

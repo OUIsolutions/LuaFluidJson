@@ -3,7 +3,7 @@
 #define PRIVATE_LUA_FLUID_CONTENT_OF_FILE_ITS_NOT_A_VALID_JSON "content of file %s its not a valid json"
 #define PRIVATE_LUA_FLUID_ELEMENT_CANNOT_BE_DUMPED "element of type %s cannot be dumped"
 
-#define LUA_FLUID_JSON_NULL_CODE_VALUE "nil"
+#define LUA_FLUID_JSON_NULL_CODE_VALUE "null"
 #define PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR "private_lua_json_fluid_null_code"
 
 
