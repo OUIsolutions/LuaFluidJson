@@ -123,17 +123,13 @@ local function main()
 
     print("compiling")
 
-    local code = os.execute("gcc -Wall  -shared -fpic -o luaFluidJson/luaFluidJson.so  src/main.c")
+    local code = os.execute("gcc -Wall  -shared -fpic -o luaFluidJson/luaFluidJson_lib.so  src/main.c")
     if code == 1 then
         return
     end
 
 
-    code = os.execute("x86_64-w64-mingw32-gcc -Wall  -shared -fpic -o luaFluidJson/luaFluidJson.dll  src/main.c")
 
-    if code == 1 then
-        return
-    end
 
     local start_assignature = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
 
