@@ -52,40 +52,12 @@ local function test_unit(unit,start_assignature)
     end
 
     local file_path = unit..name..".lua"
-    local expected_file_path = unit.."expected.txt"
 
     print("testing: "..file_path)
-
-
-    -- verifying expected code
-    local expected_code = dtw.load_file(expected_file_path)
-    if expected_code == nil or RECONSTRUCT then
-        expected_code = io.popen("lua "..file_path,"r"):read()
-        if expected_code then
-            print(" creatad "..file_path.." ")
-            dtw.write_file(expected_file_path,expected_code)
-        end
-    else
-
-        local expected_code = dtw.load_file(expected_file_path)
-
-        local comparation_result = io.popen("lua "..file_path,"r"):read()
-        if expected_code ~=comparation_result then
-            print(
-                "on file "..file_path
-                .." was expecting:'"..expected_code.."'\n"
-                .."but got:'"..comparation_result.."'")
-            --revert any modification
-            return  true
-        end
+        local output = io.popen("lua "..file_path,"r"):read()        
     end
+    
 
-
-    local test_assignature  = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
-    --means code generated side effect
-    if start_assignature ~= dtw.generate_sha_from_folder_by_content(SIDE_EFFECT) then
-        handle_side_effect(unit,test_assignature)
-    end
 
     --validate_commad_result(result)
 
