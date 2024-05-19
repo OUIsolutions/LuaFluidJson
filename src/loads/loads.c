@@ -16,7 +16,8 @@ LuaCEmbedTable * private_lua_fluid_parse_array(LuaCEmbed *args, cJSON *json_arra
             lua.tables.append_bool(created,(bool)current->valueint);
         }
         else if(cJSON_IsNull(current)){
-            lua.tables.append_string(created,PRIVATE_LUA_FLUID_NIL_CODE_VALUE);
+            char *nil_code = lua.globals.get_string(args, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+            lua.tables.append_string(created, nil_code);
         }
         else if(cJSON_IsObject(current)){
             LuaCEmbedTable *internal_created = private_lua_fluid_parse_object(args,current);
@@ -47,7 +48,8 @@ LuaCEmbedTable * private_lua_fluid_parse_object(LuaCEmbed *args, cJSON *json_obj
             lua.tables.set_bool_prop(created,key, (bool)current->valueint);
         }
         else if(cJSON_IsNull(current)){
-            lua.tables.set_string_prop(created,key, PRIVATE_LUA_FLUID_NIL_CODE_VALUE);
+            char *nil_code = lua.globals.get_string(args, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+            lua.tables.set_string_prop(created, key, nil_code);
         }
         else if(cJSON_IsObject(current)){
             LuaCEmbedTable *internal_created = private_lua_fluid_parse_object(args,current);
@@ -92,7 +94,8 @@ LuaCEmbedResponse * private_loads_json_from_raw_string(LuaCEmbed *args,const cha
 
     else if(cJSON_IsNull(parsed)){
         cJSON_Delete(parsed);
-        return  lua.response.send_str(PRIVATE_LUA_FLUID_NIL_CODE_VALUE);
+        char *nil_code = lua.globals.get_string(args, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+        return  lua.response.send_str(nil_code);
     }
     else if(cJSON_IsObject(parsed)){
         LuaCEmbedTable *created = private_lua_fluid_parse_object(args,parsed);

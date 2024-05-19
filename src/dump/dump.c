@@ -15,8 +15,18 @@ cJSON  * lua_fluid_json_dump_to_cJSON_array(LuaCEmbedTable *table){
         }
         if(type == lua.types.STRING){
             char *value = lua.tables.get_string_by_index(table,i);
-            cJSON_AddItemToArray(created_array, cJSON_CreateString(value));
+            char *nil_code = lua.globals.get_string(table->main_object, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+
+            if(strcmp(nil_code, value) == 0){
+                cJSON_AddItemToArray(created_array, cJSON_CreateNull());
+
+            }else{
+                cJSON_AddItemToArray(created_array, cJSON_CreateString(value));
+
+            }
+
         }
+
         if(type == lua.types.BOOL){
             bool value = lua.tables.get_bool_by_index(table,i);
             cJSON_AddItemToArray(created_array, cJSON_CreateBool(value));
@@ -45,7 +55,13 @@ cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table){
         }
         if(type == lua.types.STRING){
             char *value = lua.tables.get_string_by_index(table,i);
-            cJSON_AddStringToObject(created_object,key, value);
+            char *nil_code = lua.globals.get_string(table->main_object, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+            if(strcmp(nil_code,value)==0){
+                cJSON_AddNullToObject(created_object,key);
+            }else{
+                cJSON_AddStringToObject(created_object,key, value);
+            }
+
         }
         if(type == lua.types.BOOL){
             bool value = lua.tables.get_bool_by_index(table,i);
