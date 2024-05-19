@@ -24096,8 +24096,8 @@ void privateLuaCEmbedTable_free(LuaCEmbedTable *self){
 
 void privateLuaCEmbedTable_free_setting_nill(LuaCEmbedTable *self){
 
-    lua_getglobal(self->main_object->state,self->global_name);
-    lua_pushnil(self->main_object->state);
+    //lua_getglobal(self->main_object->state,self->global_name);
+//    lua_pushnil(self->main_object->state);
     privateLuaCEmbedTable_free(self);
 }
 
@@ -24211,10 +24211,10 @@ bool LuaCembedTable_has_key_at_index(LuaCEmbedTable *self, long index){
     lua_pushnil(self->main_object->state);
     while(lua_next(self->main_object->state,table_index)){
         if(total == converted_index){
-            if(lua_type(self->main_object->state,-2) != LUA_CEMBED_STRING ){
-                return false;
-            }
-            return true;
+
+            bool has_key  =lua_type(self->main_object->state,-2) == LUA_CEMBED_STRING;
+            lua_pop(self->main_object->state,1);
+            return has_key;
         }
 
         lua_pop(self->main_object->state,1);

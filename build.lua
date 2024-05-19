@@ -54,9 +54,18 @@ local function test_unit(unit,start_assignature)
     local file_path = unit..name..".lua"
 
     print("testing: "..file_path)
-        local output = io.popen("lua "..file_path,"r"):read()        
+
+    local output = io.popen("lua "..file_path,"r"):read()
+    if output then
+       dtw.write_file(unit.."expected.txt",output)
+     end
+
+
+    local test_assignature  = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
+    --means code generated side effect
+    if start_assignature ~= dtw.generate_sha_from_folder_by_content(SIDE_EFFECT) then
+        handle_side_effect(unit,test_assignature)
     end
-    
 
 
     --validate_commad_result(result)
@@ -87,7 +96,7 @@ local function main()
 
     print("compiling")
 
-    local code = os.execute("gcc -Wall  -shared -fpic -o luaFluidJson/luaFluidJson_lib.so  src/main.c")
+    local code = os.execute("gcc -Wall  -shared -fpic -fsanitize=address -o luaFluidJson/luaFluidJson_lib.so  src/main.c")
     if code == 1 then
         return
     end

@@ -1,12 +1,17 @@
 
 json = require("luaFluidJson/luaFluidJson")
 
-local teste = {
-    a =30,
-    b= 'null',
-    c=function()end,
-    nome='mateus',
-    array = {1,2,3}
-}
+local user  ={
 
-json.dumps_to_file(teste,"saida.json",false)
+    name='Nateus',
+    sss=true,
+
+    age=27.4,
+    sons={
+        {name='son1',maried=true }
+    }
+}
+local ident = true
+local value = json.dumps_to_string(user,ident);
+print(value)
+

@@ -62,9 +62,10 @@ cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table){
 
         }
         if(type == lua.types.BOOL){
-            bool value = lua.tables.get_bool_by_index(table,i);
+            bool value = lua.tables.get_bool_by_index(table,i);;
             cJSON_AddBoolToObject(created_object,key, value);
         }
+
         if(type == lua.types.TABLE){
             LuaCEmbedTable *internal = lua.tables.get_sub_table_by_index(table,i);
             cJSON *value = lua_fluid_json_dump_table_to_cJSON(internal);
@@ -78,6 +79,7 @@ cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table){
 cJSON  * lua_fluid_json_dump_table_to_cJSON(LuaCEmbedTable *table){
 
     if(lua_json_fluid_table_is_object(table)){
+
         return lua_fluid_json_dump_to_cJSON_object(table);
     }
     return lua_fluid_json_dump_to_cJSON_array(table);
@@ -117,9 +119,10 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
 
     bool ident = true;
 
-    if(lua.args.get_type(args,1) != lua.types.NOT_FOUND){
+    if(lua.args.get_type(args,1) != lua.types.NILL){
         ident = lua.args.get_bool(args,1);
     }
+
     if(lua.has_errors(args)){
         char *error_msg = lua.get_error_message(args);
         return lua.response.send_error(error_msg);
@@ -135,7 +138,6 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
 
     LuaCEmbedResponse *response = lua.response.send_str(result_str);
     cJSON_Delete(result);
-
     free(result_str);
     return response;
 }
@@ -143,20 +145,6 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
 
 LuaCEmbedResponse * lua_fluid_json_dump_to_file(LuaCEmbed *args){
 
-    char * output = lua.args.get_str(args,1);
-    if(lua.has_errors(args)){
-        char *error_msg = lua.get_error_message(args);
-        return lua.response.send_error(error_msg);
-    }
-    bool ident = true;
-
-    if(lua.args.get_type(args,2) != lua.types.NOT_FOUND){
-        ident = lua.args.get_bool(args,2);
-    }
-    if(lua.has_errors(args)){
-        char *error_msg = lua.get_error_message(args);
-        return lua.response.send_error(error_msg);
-    }
 
     cJSON *result = NULL;
     int element_type = lua.args.get_type(args,0);
@@ -184,6 +172,25 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_file(LuaCEmbed *args){
                 PRIVATE_LUA_FLUID_ELEMENT_CANNOT_BE_DUMPED,
                 lua.convert_arg_code(element_type)
         );
+    }
+
+
+    char * output = lua.args.get_str(args,1);
+    if(lua.has_errors(args)){
+        char *error_msg = lua.get_error_message(args);
+        cJSON_Delete(result);
+        return lua.response.send_error(error_msg);
+    }
+    bool ident = true;
+
+    if(lua.args.get_type(args,2) != lua.types.NILL){
+        ident = lua.args.get_bool(args,2);
+    }
+
+    if(lua.has_errors(args)){
+        char *error_msg = lua.get_error_message(args);
+        cJSON_Delete(result);
+        return lua.response.send_error(error_msg);
     }
 
     char *result_str  = NULL;
