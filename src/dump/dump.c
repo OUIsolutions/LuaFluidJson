@@ -3,11 +3,71 @@
 
 
 
-cJSON  * lua_fluid_json_dump_to_cJSON_array(LuaCEmbedTable *table);
+cJSON  * lua_fluid_json_dump_to_cJSON_array(LuaCEmbedTable *table){
+    long size = lua.tables.get_size(table);
+    cJSON * created_array = cJSON_CreateArray();
+    for(int i = 0; i<size;i++){
+        int type = lua.tables.get_type_by_index(table,i);
 
-cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table);
+        if(type == lua.types.NUMBER){
+            double value = lua.tables.get_double_by_index(table,i);
+            cJSON_AddItemToArray(created_array, cJSON_CreateNumber(value));
+        }
+        if(type == lua.types.STRING){
+            char *value = lua.tables.get_string_by_index(table,i);
+            cJSON_AddItemToArray(created_array, cJSON_CreateString(value));
+        }
+        if(type == lua.types.BOOL){
+            bool value = lua.tables.get_bool_by_index(table,i);
+            cJSON_AddItemToArray(created_array, cJSON_CreateBool(value));
+        }
 
-cJSON  * lua_fluid_json_dump_table_to_cJSON(LuaCEmbedTable *table);
+        if(type == lua.types.TABLE){
+            LuaCEmbedTable *internal = lua.tables.get_sub_table_by_index(table,i);
+            cJSON *value = lua_fluid_json_dump_table_to_cJSON(internal);
+            cJSON_AddItemToArray(created_array, value);
+        }
+
+    }
+    return created_array;
+}
+
+cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table){
+    long size = lua.tables.get_size(table);
+    cJSON * created_object = cJSON_CreateObject();
+    for(int i = 0; i<size;i++){
+        char *key =lua.tables.get_key_by_index(table,i);
+        int type = lua.tables.get_type_by_index(table,i);
+
+        if(type == lua.types.NUMBER){
+            double value = lua.tables.get_double_by_index(table,i);
+            cJSON_AddNumberToObject(created_object,key,value);
+        }
+        if(type == lua.types.STRING){
+            char *value = lua.tables.get_string_by_index(table,i);
+            cJSON_AddStringToObject(created_object,key, value);
+        }
+        if(type == lua.types.BOOL){
+            bool value = lua.tables.get_bool_by_index(table,i);
+            cJSON_AddBoolToObject(created_object,key, value);
+        }
+        if(type == lua.types.TABLE){
+            LuaCEmbedTable *internal = lua.tables.get_sub_table_by_index(table,i);
+            cJSON *value = lua_fluid_json_dump_table_to_cJSON(internal);
+            cJSON_AddItemToObject(created_object,key,value);
+        }
+
+    }
+    return created_object;
+}
+
+cJSON  * lua_fluid_json_dump_table_to_cJSON(LuaCEmbedTable *table){
+
+    if(lua_json_fluid_table_is_object(table)){
+        return lua_fluid_json_dump_to_cJSON_object(table);
+    }
+    return lua_fluid_json_dump_to_cJSON_array(table);
+}
 
 
 LuaCEmbedResponse * lua_fluid_json_dump_to_string(LuaCEmbed *args){
