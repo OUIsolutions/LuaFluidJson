@@ -6,9 +6,8 @@ local user  ={
     age=27,
     maried=false,
     sons={
-        {name='son1',maried='nill'}
+        {name='son1',maried='null'}
     }
 }
 local ident = true
-local dumped = json.dumps_to_string(json,ident);
-print(dumped)
+json.dumps_to_file(user,"test/target/out.json",ident);

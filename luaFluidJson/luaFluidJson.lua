@@ -18,7 +18,7 @@ local path = info.source:match("@(.*/)") or ""
 local lib_path = ''
 
 if os.getenv("HOME") then
-    lib_path = path.."luaFluidJson.so"
+    lib_path = path.."luaFluidJson_lib.so"
 else
     perror("undefined os")
 end 

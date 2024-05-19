@@ -6,6 +6,7 @@ local dtw = require("build/luaDoTheWorld/luaDoTheWorld")
 
 
 local RECONSTRUCT = false
+local TEST_DIR ="test/main_test"
 local SIDE_EFFECT = "test/target"
 local side_effect_copy_path  = SIDE_EFFECT.."copy"
 
@@ -52,9 +53,10 @@ end
 ---@param unit string
 ---@param start_assignature string
 local function test_unit(unit,start_assignature)
-    print("testing: "..unit)
 
-    local name = slipt(unit,"/")[2]
+    local paths =  slipt(unit,"/")
+    local name  = paths[#paths]
+
     if name == nil then
         print("name of test "..unit.."not provide")
         return true
@@ -62,6 +64,8 @@ local function test_unit(unit,start_assignature)
 
     local file_path = unit..name..".lua"
     local expected_file_path = unit.."expected.txt"
+
+    print("testing: "..file_path)
 
 
     -- verifying expected code
@@ -107,10 +111,12 @@ local function exec_tests(start_assignature)
     print("starting tests")
 
     local concat_path = true;
-    local tests  = dtw.list_dirs("tests",concat_path)
+    local tests  = dtw.list_dirs(TEST_DIR,concat_path)
 
     for i, t in ipairs(tests) do
         local error = test_unit(t,start_assignature)
+            dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
+
         if error then
             return
         end
@@ -139,8 +145,7 @@ local function main()
 
     dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
     dtw.remove_any(side_effect_copy_path)
-    dtw.remove_any("luaDoTheWorld.zip")
-    os.execute("zip -r luaDoTheWorld.zip luaDoTheWorld/")
+   -- os.execute("zip -r luaDoTheWorld.zip luaDoTheWorld/")
 end
 
 
