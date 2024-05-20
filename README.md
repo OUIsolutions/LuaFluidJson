@@ -96,7 +96,7 @@ print("name:"..parsed.name)
 print("age:"..parsed.age)
 
 ```
-### The Null Terminator
+### The Null Code
 since the lua nill doesn't work as other languages "nulls" ,the lib consider null as a string 
 so if you put "null" into your code, the lib will consider as a null value
 
