@@ -12,8 +12,16 @@ to deal with jsons.
 **Linux** (Tested on Fedora and Ubuntu)
 
 ### Installation
-The instalation doesnt require lua rocks or any package manager, just download the
-[Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip) into your project and copy in the root of your main,and you can start using 
+The installation doesn't require lua rocks or any package manager, just download the
+[Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip) into your project and copy the internal content in the root of your main,and you can start using 
+
+### Installation from Terminal 
+if you prefer just run these command to enable the lib 
+~~~shell
+
+wget https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip  && unzip luaFluidJson.zip  -d luaFluidJson && cp luaFluidJson/luaFluidJson .. 
+~~~
+
 
 ### Dumping Json file
 these code dumps the following struct into a json file 

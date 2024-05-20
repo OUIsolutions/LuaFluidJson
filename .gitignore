@@ -6,7 +6,7 @@
 *.ko
 *.obj
 *.elf
-luaFluidJson.zip
+src.zip
 # Linker output
 *.ilk
 *.map
