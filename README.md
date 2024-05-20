@@ -13,7 +13,7 @@ to deal with jsons.
 
 ### Installation
 The installation doesn't require lua rocks or any package manager, just download the
-[Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip) into your project and copy the internal content in the root of your main,and you can start using 
+[Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/src.zip) into your project and copy the internal content in the root of your main,and you can start using 
 
 ### Installation from Terminal 
 if you prefer just run these command to enable the lib 
