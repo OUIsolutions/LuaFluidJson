@@ -16,11 +16,12 @@ The installation doesn't require lua rocks or any package manager, just download
 [Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/src.zip) into your project and copy the internal content in the root of your main,and you can start using 
 
 ### Installation from Terminal 
-if you prefer just run these command to enable the lib 
+if you prefer just run these command into your root project start point to install  the lib 
 ~~~shell
 
-wget https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip  && unzip luaFluidJson.zip  -d luaFluidJson && cp luaFluidJson/luaFluidJson .. 
+wget https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/src.zip  && unzip src.zip  -d . 
 ~~~
+
 
 
 ### Dumping Json file
