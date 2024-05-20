@@ -13,7 +13,7 @@ to deal with jsons.
 
 ### Installation
 The instalation doesnt require lua rocks or any package manager, just download the
-[download link](aaa) into your project and copy in the root of your main,and you can start using 
+[Lib Package](https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/luaFluidJson.zip) into your project and copy in the root of your main,and you can start using 
 
 ### Dumping Json file
 these code dumps the following struct into a json file 
