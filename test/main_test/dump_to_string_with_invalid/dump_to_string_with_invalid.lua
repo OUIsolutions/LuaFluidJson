@@ -5,6 +5,7 @@ local user  ={
     name='Nateus',
     age=27,
     maried=true,
+    v = function()end,
     sons={
         {name='son1',maried=false }
     }

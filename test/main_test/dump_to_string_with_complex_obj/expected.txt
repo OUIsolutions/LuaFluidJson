@@ -1,0 +1,14 @@
+{
+	"maried":	true,
+	"age":	27,
+	"name":	"Nateus",
+	"sons":	[[{
+				"maried":	true,
+				"age":	27,
+				"name":	"Nateus",
+				"sons":	[{
+						"maried":	false,
+						"name":	"son1"
+					}]
+			}, false, "son1"]]
+}

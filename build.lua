@@ -60,6 +60,20 @@ local function test_unit(unit,start_assignature)
        dtw.write_file(unit.."expected.txt",output)
      end
 
+    print("valgrind testing: "..file_path)
+    os.execute("valgrind  lua "..file_path.." &>> out.txt","r")
+    local output_valgrind  = dtw.load_file("out.txt")
+    local heap_test = string.find(output_valgrind, "All heap blocks were freed ")
+    local error_test = string.find(output_valgrind,"0 errors from 0 contexts")
+    dtw.remove_any("out.txt")
+
+    if heap_test == nil or  error_test == nil then
+        print(output_valgrind)
+        return true
+    end
+
+
+
 
     local test_assignature  = dtw.generate_sha_from_folder_by_content(SIDE_EFFECT)
     --means code generated side effect
@@ -82,7 +96,7 @@ local function exec_tests(start_assignature)
 
     for i, t in ipairs(tests) do
         local error = test_unit(t,start_assignature)
-            dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
+         dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
 
         if error then
             return
@@ -110,7 +124,7 @@ local function main()
     dtw.copy_any_overwriting(side_effect_copy_path,SIDE_EFFECT);
     dtw.remove_any(side_effect_copy_path)
 
-   -- os.execute("zip -r luaDoTheWorld.zip luaDoTheWorld/")
+    os.execute("zip -r luaFluidJson.zip src/")
 end
 
 
