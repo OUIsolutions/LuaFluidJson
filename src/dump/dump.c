@@ -205,8 +205,12 @@ LuaCEmbedResponse * lua_fluid_json_dump_to_file(LuaCEmbed *args){
     }
 
     cJSON_Delete(result);
-    private_lua_fluid_write_file(output,result_str);
+    int error= private_lua_fluid_write_file(output,result_str);
     free(result_str);
+    if(error){
+        return lua.response.send_error(PRIVATE_LUA_FLUI_IMPOSSIBLE_TO_WRITE_FILE,output);
+        
+    }
     return NULL;
 }
 

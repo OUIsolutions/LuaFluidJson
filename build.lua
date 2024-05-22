@@ -61,12 +61,14 @@ local function test_unit(unit,start_assignature)
      end
 
     print("valgrind testing: "..file_path)
-    os.execute("valgrind  lua "..file_path.." &>> out.txt","r")
+    os.execute("valgrind  lua "..file_path.."  >> out.txt 2>&1")
+
     local output_valgrind  = dtw.load_file("out.txt")
+
+
     local heap_test = string.find(output_valgrind, "All heap blocks were freed ")
     local error_test = string.find(output_valgrind,"0 errors from 0 contexts")
     dtw.remove_any("out.txt")
-
     if heap_test == nil or  error_test == nil then
         print(output_valgrind)
         return true
