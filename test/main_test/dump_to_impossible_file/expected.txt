@@ -1,0 +1,2 @@
+impossible to write file at test/target/sss/out.json
+
