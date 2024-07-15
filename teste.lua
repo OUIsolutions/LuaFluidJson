@@ -10,5 +10,5 @@ local user  ={
     }
 }
 local ident = true
-local works,message = pcall(json.dumps_to_file,user,"test/target/sss/out.json",ident);
+local works,message = pcall(json.dumps_to_file,user,"out.json",ident);
 print(message)

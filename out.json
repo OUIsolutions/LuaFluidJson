@@ -1,9 +1,9 @@
 {
 	"maried":	false,
 	"name":	"Nateus",
-	"age":	27,
 	"sons":	[{
 			"maried":	null,
 			"name":	"son1"
-		}]
+		}],
+	"age":	27
 }
