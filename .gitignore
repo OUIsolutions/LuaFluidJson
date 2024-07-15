@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+src.zip
 # Object files
 *.o
 *.ko
