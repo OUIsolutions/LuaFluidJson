@@ -19,7 +19,7 @@ The installation doesn't require lua rocks or any package manager, just download
 if you prefer just run these command into your root project start point to install  the lib 
 ~~~shell
 
-wget https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.50/src.zip  && unzip src.zip  -d . 
+wget https://github.com/OUIsolutions/LuaFluidJson/releases/download/v0.51/src.zip  && unzip src.zip  -d . 
 ~~~
 
 
