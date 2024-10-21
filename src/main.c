@@ -24,8 +24,7 @@ LuaCEmbedNamespace lua;
 
 int load_lua(lua_State *state){
     lua = newLuaCEmbedNamespace();
-    bool set_functions_as_public  = false;
-    LuaCEmbed * l  = lua.newLuaLib(state,set_functions_as_public);
+    LuaCEmbed * l  = lua.newLuaLib(state);
     lua.globals.set_string(l, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR, LUA_FLUID_JSON_NULL_CODE_VALUE);
 
     lua.add_callback(l, PRIVATE_LUA_FLUID_JSON_LOAD_JSON_FROM_STRING_FUN, lua_fluid_json_loads_json_from_string);
