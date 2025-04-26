@@ -54,7 +54,6 @@ function main()
             command = {"gcc --static -shared /output/src/one.c -o /output/release/luaFluidJson/luaFluidJson.so"}
         })
 
-
         builded = true
     end
     
