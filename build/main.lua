@@ -35,23 +35,24 @@ function main()
     end
 
     if darwin.argv.one_of_args_exist("build_release") then
-                
+        darwin.dtw.copy_any_overwriting("extra/starter.lua","release/luaFluidJson/luaFluidJson.lua")
+
         -- Create a new container machine
-        local machine = darwin.ship.create_machine("alpine:latest")
+        local machine = darwin.ship.create_machine("debian:latest")
         -- Configure container runtime
         machine.provider = "sudo docker"
         -- Add build-time commands
-        machine.add_comptime_command("apk update")
-        machine.add_comptime_command("apk add gcc musl-dev")
+        machine.add_comptime_command("apt update")
+        machine.add_comptime_command("apt install -y gcc ")
+        
         machine.start({
             flags = {
-                "--memory=200m",
                 "--network=host"
             },
             volumes = {
                 { ".", "/output" }
             },
-            command = "gcc --static -shared /output/src/one.c -o /output/release/luaFluidJson/luaFluidJson.so"
+            command = "gcc  -shared -fpic /output/src/one.c -o /output/release/luaFluidJson/luaFluidJson.so"
         })
 
         builded = true
