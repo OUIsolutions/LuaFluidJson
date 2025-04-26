@@ -1,7 +1,7 @@
 
 #include "imports/imports.fdefine.h"
 
-int load_lua(lua_State *state){
+int load_lua_fluid_josn(lua_State *state){
     LuaCEmbed * l  = newLuaCEmbedLib(state);
     LuaCEmbed_set_global_string(l, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR, LUA_FLUID_JSON_NULL_CODE_VALUE);
 
