@@ -1,27 +1,5 @@
 
 
-
-#include "constants.h"
-#include  "dependencies/LuaCEmbed.h"
-
-#ifndef cJSON__h
-#include "dependencies/cJSON/cJSON.h"
-#include "dependencies/cJSON/cJSON.c"
-#endif
-
-
-LuaCEmbedNamespace lua;
-#include "io/io.h"
-#include "loads/loads.h"
-#include "dump/dump.h"
-#include "extra/extra.h"
-
-#include "io/io.c"
-#include "loads/loads.c"
-#include "dump/dump.c"
-#include "extra/extra.c"
-
-
 int load_lua(lua_State *state){
     lua = newLuaCEmbedNamespace();
     LuaCEmbed * l  = lua.newLuaLib(state);

@@ -10,8 +10,10 @@ function install_dependencies()
     os.execute("mkdir -p dependencies")
 
     
-    os.execute("curl -L https://github.com/OUIsolutions/LuaCEmbed/releases/download/v0.780/LuaCEmbed.h -o dependencies/LuaCEmbed.h")
-    os.execute("curl -L https://github.com/OUIsolutions/DoTheWorld/releases/download/v8.002/doTheWorld.h -o dependencies/doTheWorld.h")
+    os.execute("curl -L https://github.com/OUIsolutions/LuaCEmbed/releases/download/0.8.0/LuaCEmbedOne.c -o dependencies/LuaCEmbedOne.c ")
+    os.execute("curl -L https://raw.githubusercontent.com/DaveGamble/cJSON/refs/tags/v1.7.18/cJSON.c -o dependencies/cJSON.c")
+    os.execute("curl -L https://raw.githubusercontent.com/DaveGamble/cJSON/refs/tags/v1.7.18/cJSON.h -o dependencies/cJSON.h")
+
 
 
     local new_hasher = darwin.dtw.newHasher()
