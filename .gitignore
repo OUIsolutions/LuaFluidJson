@@ -1,6 +1,8 @@
 # Prerequisites
 *.d
 src.zip
+dependencies
+release
 # Object files
 *.o
 *.ko
