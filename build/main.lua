@@ -26,7 +26,7 @@ function main()
     darwin.dtw.write_file("release/luaFluidJson_no_dep.c", no_dep_amalgamation)
 
     darwin.dtw.copy_any_overwriting("extra/starter.lua","release/luaFluidJson/luaFluidJson.lua")
-    os.execute("gcc src/one.c -Wall -shared  -fpic -o release/luaFluidJson/luaFluidJson.so")
+    os.execute("gcc src/one.c  -shared  -fpic -o  -ldl  release/luaFluidJson/luaFluidJson.so")
 
     --zip the folder 
     os.execute("cd release && zip -r luaFluidJson.zip luaFluidJson")

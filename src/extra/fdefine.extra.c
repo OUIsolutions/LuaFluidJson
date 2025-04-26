@@ -10,7 +10,7 @@
 bool lua_json_fluid_table_is_object(LuaCEmbedTable *table){
     long size = LuaCEmbedTable_get_full_size(table);
     for(int i =0; i < size;i++){
-        if(lua.tables.has_key(table,i) == false){
+        if(LuaCembedTable_has_key_at_index(table,i) == false){
             return false;
         }
     }
@@ -18,12 +18,12 @@ bool lua_json_fluid_table_is_object(LuaCEmbedTable *table){
 }
 LuaCEmbedResponse * lua_json_fluid_is_table_a_object(LuaCEmbed *args){
     LuaCEmbedTable *table = LuaCEmbed_get_arg_table(args,0);
-    if(lua.has_errors(args)){
-        char*error= lua.get_error_message(args);
-        return lua.response.send_error(error);
+    if(LuaCEmbed_has_errors(args)){
+        char*error= LuaCEmbed_get_error_message(args);
+        return LuaCEmbed_send_error(error);
     }
     bool response = lua_json_fluid_table_is_object(table);
-    return lua.response.send_bool(response);
+    return LuaCEmbed_send_bool(response);
 }
 
 LuaCEmbedResponse * lua_json_fluid_set_null_code(LuaCEmbed *args){
