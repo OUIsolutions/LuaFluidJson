@@ -37,13 +37,13 @@ function main()
     if darwin.argv.one_of_args_exist("build_release") then
                 
         -- Create a new container machine
-        local image = darwin.ship.create_machine("alpine:latest")
+        local machine = darwin.ship.create_machine("alpine:latest")
         -- Configure container runtime
-        image.provider = "sudo docker"
+        machine.provider = "sudo docker"
         -- Add build-time commands
-        image.add_comptime_command("apk update")
-        image.add_comptime_command("apk add gcc musl-dev")
-        image.start({
+        machine.add_comptime_command("apk update")
+        machine.add_comptime_command("apk add gcc musl-dev")
+        machine.start({
             flags = {
                 "--memory=200m",
                 "--network=host"
@@ -51,7 +51,7 @@ function main()
             volumes = {
                 { ".", "/output" }
             },
-            command = {"gcc --static -shared /output/src/one.c -o /output/release/luaFluidJson/luaFluidJson.so"}
+            command = "gcc --static -shared /output/src/one.c -o /output/release/luaFluidJson/luaFluidJson.so"
         })
 
         builded = true
