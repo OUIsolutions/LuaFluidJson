@@ -15,7 +15,7 @@ function main()
 
   local no_dep_amalgamation = darwin.camalgamator.generate_amalgamation_with_callback("src/one.c",
         function(import, path)
-            if import == "src/imports/../dependencie.dependencies.h"  then
+            if import == "src/imports/../dependencie.dep.h"  then
                 return "dont-include"
             end
             return "include-once"

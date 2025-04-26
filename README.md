@@ -29,9 +29,14 @@ For buiding from scratch you need to have [darwin](https://github.com/OUIsolutio
 curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.2.0/darwin.out -o darwin.out && chmod +x darwin.out &&  sudo  mv darwin.out /usr/bin/darwin
 ```
 
-Then you can build the project with in the root dir of the project:
+--build from docker:
 ```bash
 darwin run_blueprint build/  --mode folder build_release
+```
+
+--build from local:
+```bash
+darwin run_blueprint build/  --mode folder build_local
 ```
 
 It will generate all the **releases** in the **/release** dir.
