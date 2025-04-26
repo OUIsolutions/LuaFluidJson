@@ -48,40 +48,98 @@ cJSON  * lua_fluid_json_dump_to_cJSON_array(LuaCEmbedTable *table){
     return created_array;
 }
 
+// Estrutura auxiliar para armazenar chaves e seus índices para ordenação
+typedef struct {
+    char *key;
+    int index;
+} KeyIndexPair;
+
+// Função de comparação para qsort
+static int compare_keys(const void *a, const void *b) {
+    return strcmp(((KeyIndexPair*)a)->key, ((KeyIndexPair*)b)->key);
+}
+
 cJSON  * lua_fluid_json_dump_to_cJSON_object(LuaCEmbedTable *table){
     long size = LuaCEmbedTable_get_full_size(table);
     cJSON * created_object = cJSON_CreateObject();
-    for(int i = 0; i<size;i++){
-        char *key = LuaCembedTable_get_key_by_index(table,i);
-        int type = LuaCEmbedTable_get_type_by_index(table,i);
-
-        if(type == LUA_CEMBED_NUMBER){
-            double value = LuaCEmbedTable_get_double_by_index(table,i);
-            cJSON_AddNumberToObject(created_object,key,value);
-        }
-        if(type == LUA_CEMBED_STRING){
-            char *value = LuaCEmbedTable_get_string_by_index(table,i);
-            char *nil_code = LuaCEmbed_get_global_string(table->main_object, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
-            if(strcmp(nil_code,value)==0){
-                cJSON_AddNullToObject(created_object,key);
-            }else{
-                cJSON_AddStringToObject(created_object,key, value);
+    
+    // Criar array para armazenar pares de chave-índice
+    KeyIndexPair *pairs = (KeyIndexPair*)malloc(size * sizeof(KeyIndexPair));
+    if (!pairs) {
+        // Em caso de falha na alocação, recorrer ao método original
+        for(int i = 0; i < size; i++){
+            char *key = LuaCembedTable_get_key_by_index(table, i);
+            int type = LuaCEmbedTable_get_type_by_index(table, i);
+            
+            if(type == LUA_CEMBED_NUMBER){
+                double value = LuaCEmbedTable_get_double_by_index(table,i);
+                cJSON_AddNumberToObject(created_object,key,value);
+            }
+            if(type == LUA_CEMBED_STRING){
+                char *value = LuaCEmbedTable_get_string_by_index(table,i);
+                char *nil_code = LuaCEmbed_get_global_string(table->main_object, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+                if(strcmp(nil_code,value)==0){
+                    cJSON_AddNullToObject(created_object,key);
+                }else{
+                    cJSON_AddStringToObject(created_object,key, value);
+                }
+            }
+            if(type == LUA_CEMBED_BOOL){
+                bool value = LuaCEmbedTable_get_bool_by_index(table,i);
+                cJSON_AddBoolToObject(created_object,key, value);
             }
 
-
+            if(type == LUA_CEMBED_TABLE){
+                LuaCEmbedTable *internal = LuaCEmbedTable_get_sub_table_by_index(table,i);
+                cJSON *value = lua_fluid_json_dump_table_to_cJSON(internal);
+                cJSON_AddItemToObject(created_object,key,value);
+            }
+        }
+        return created_object;
+    }
+    
+    // Preencher o array com as chaves e seus índices
+    for(int i = 0; i < size; i++){
+        pairs[i].key = LuaCembedTable_get_key_by_index(table, i);
+        pairs[i].index = i;
+    }
+    
+    // Ordenar as chaves alfabeticamente
+    qsort(pairs, size, sizeof(KeyIndexPair), compare_keys);
+    
+    // Adicionar os elementos ao objeto JSON na ordem ordenada
+    for(int i = 0; i < size; i++){
+        char *key = pairs[i].key;
+        int idx = pairs[i].index;
+        int type = LuaCEmbedTable_get_type_by_index(table, idx);
+        
+        if(type == LUA_CEMBED_NUMBER){
+            double value = LuaCEmbedTable_get_double_by_index(table, idx);
+            cJSON_AddNumberToObject(created_object, key, value);
+        }
+        if(type == LUA_CEMBED_STRING){
+            char *value = LuaCEmbedTable_get_string_by_index(table, idx);
+            char *nil_code = LuaCEmbed_get_global_string(table->main_object, PRIVATE_LUA_FLUID_JSON_NULL_CODE_GLOBAL_VAR);
+            if(strcmp(nil_code, value) == 0){
+                cJSON_AddNullToObject(created_object, key);
+            }else{
+                cJSON_AddStringToObject(created_object, key, value);
+            }
         }
         if(type == LUA_CEMBED_BOOL){
-            bool value = LuaCEmbedTable_get_bool_by_index(table,i);
-            cJSON_AddBoolToObject(created_object,key, value);
+            bool value = LuaCEmbedTable_get_bool_by_index(table, idx);
+            cJSON_AddBoolToObject(created_object, key, value);
         }
-
         if(type == LUA_CEMBED_TABLE){
-            LuaCEmbedTable *internal = LuaCEmbedTable_get_sub_table_by_index(table,i);
+            LuaCEmbedTable *internal = LuaCEmbedTable_get_sub_table_by_index(table, idx);
             cJSON *value = lua_fluid_json_dump_table_to_cJSON(internal);
-            cJSON_AddItemToObject(created_object,key,value);
+            cJSON_AddItemToObject(created_object, key, value);
         }
-
     }
+    
+    // Liberar memória
+    free(pairs);
+    
     return created_object;
 }
 
