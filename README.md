@@ -8,6 +8,7 @@ A JSON parser for Lua that works with native Lua mechanics - no adaptations requ
 > ⚠️ **WARNING**: This library is not production-ready. Use with caution.
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Supported Platforms](#supported-platforms)
 - [Installation](#installation)
@@ -66,14 +67,16 @@ curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.2.0/darwin.ou
 
 ### Building the Library
 
-Build using Docker:
+Build locally with gcc:
+
 ```bash
-darwin run_blueprint build/ --mode folder build_release
+darwin run_blueprint build/ --mode folder --target local
 ```
 
-Build locally:
+Build using Docker (for release):
+
 ```bash
-darwin run_blueprint build/ --mode folder build_local
+darwin run_blueprint build/ --mode folder --target release
 ```
 
 All compiled **releases** will be generated in the **/release** directory.

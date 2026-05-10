@@ -1,4 +1,4 @@
-function main_build()
+function prepare()
     darwin.dtw.remove_any("release")
     install_dependencies()
 
@@ -21,16 +21,5 @@ function main_build()
     )
 
     darwin.dtw.write_file("release/luaFluidJson_no_dep.c", no_dep_amalgamation)
-
     darwin.dtw.copy_any_overwriting("extra/starter.lua", "release/luaFluidJson/luaFluidJson.lua")
-    os.execute("gcc src/one.c -ldl -shared -fpic -o release/luaFluidJson/luaFluidJson.so")
-    os.execute("cd release && zip -r luaFluidJson.zip luaFluidJson")
 end
-
-darwin.add_recipe({
-    name = "main",
-    description = "Builds the LuaFluidJson module",
-    outs = { "release/luaFluidJson" },
-    inputs = { "src/" },
-    callback = main_build
-})
